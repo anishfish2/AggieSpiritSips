@@ -32,9 +32,15 @@ def return_similar_bars():
     print(data.head())
     bar_vectors = {}
     bar_names = np.unique(data['bar_name'])
-    print([np.array(i) for i in data[data['bar_name'] == bar1]['sentence_embeddings']])
+
+    def convert_to_array(string):
+        numbers = np.array(string[1:-1].split(" "))
+        return numbers
+    
+    data['sentence_embeddings'] = data['sentence_embeddings'].apply(lambda x: np.array(convert_to_array(x)))
+
     for bar_name in bar_names:
-        bar_vectors[bar_name] = np.mean([np.array(i) for i in data[data['bar_name'] == bar_name]['sentence_embeddings']], axis = 0)
+        bar_vectors[bar_name] = np.mean(np.array([np.array(i) for i in data[data['bar_name'] == bar_name]['sentence_embeddings']]), axis = 0)
 
     similarities_df = pd.DataFrame(bar_names, columns=['bar_name'])
     for bar_name in bar_names:
