@@ -1,5 +1,6 @@
 import { useState } from "react";
 import searchImage from "./assets/search.png";
+import backgroundImage from "./assets/background.jpg"
 import "./landing.css";
 
 
@@ -10,11 +11,11 @@ function Landing() {
     // Source: https://www.youtube.com/watch?v=9hnJsNIBq1g
     <>
     <div className="title">
-        <h1>AggieSpiritSips</h1>
+            <h1>AggieSpiritSips</h1>
     </div>
-    <div className="search-container">
-        <form action="">
-            <input type="text" placeholder="enter a keyword"/>
+    <div className="container">
+        <form action="" className="search-bar">
+            <input type="text" placeholder="Enter a keyword..."/>
             <button type="submit">
                 <img src={searchImage}/>
             </button>
