@@ -1,21 +1,22 @@
 *{
-    margin:0;
-    padding:0;
     font-family: 'Inter', sans-serif;
 }
 
 body{
-    margin: 0;
     height: 100vh;
     background: linear-gradient(to bottom, #041b57, #4b235b);
 }
 .container{
     width: 100vh;
-    margin:0;
     padding:5%;
     display:flex;
     align-items: center;
     justify-content: center;
+}
+
+.title{
+    text-align: center;
+    margin-top: 10%;
 }
 
 .search-bar{
@@ -49,3 +50,9 @@ body{
     justify-content: center;
 }
 
+.overall-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
