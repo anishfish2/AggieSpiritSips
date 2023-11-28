@@ -1,16 +1,19 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import "./barpage.css"
+import './landing.css'
 import Landing from "./landing"
+import BarPage from "./BarPage";
+import { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0);
+
+  const [hasSearched, setHasSearched] = useState(false)
+  const [currentBar, setCurrentBar] = useState("NONE")
 
   return (
     <>
-      <Landing></Landing>
+      {hasSearched ? <BarPage currentBar={currentBar}/> : <Landing setCurrentBar={setCurrentBar} setHasSearched={setHasSearched} currentBar={currentBar} />}
     </>
+    
   );
 }
 
