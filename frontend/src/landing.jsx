@@ -11,6 +11,7 @@ function Landing(props) {
   const handleSubmitClick = async (e) => {
 
     e.preventDefault();
+    props.setloading(true)
     let result = ""
 
     //find bar similar to keyword via api call
@@ -45,6 +46,7 @@ function Landing(props) {
     props.setCurrentBar(barsArray[0])
     props.setBarList(barsArray)
     props.setKeyword(inputText)
+    props.setloading(false)
   }
 
   const handleInputChange = (e) => {
@@ -60,8 +62,8 @@ function Landing(props) {
       </div>
       <div className="container">
         <form action="" className="search-bar" onSubmit={handleSubmitClick}>
-          <input value={inputText} onChange={handleInputChange} type="text" placeholder="Enter a keyword..." />
-          <button type="submit">
+          <input className="input-text" value={inputText} onChange={handleInputChange} type="text" placeholder="Enter a keyword..." />
+          <button className="submitbutton" type="submit">
             <img src={searchImage} />
           </button>
         </form>
