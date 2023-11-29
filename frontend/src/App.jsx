@@ -1,5 +1,6 @@
 import "./barpage.css"
 import './landing.css'
+import './app.css'
 import Landing from "./landing"
 import BarPage from "./BarPage";
 import { useState } from "react";
@@ -16,7 +17,7 @@ function App() {
   return (
     <>
       
-      {loading ? (<img src={loadingspinner} alt="loading..." />) : (hasSearched ? <BarPage keyword={keyword} barList={barList} currentBar={currentBar}/> : <Landing setloading={setloading} setKeyword={setKeyword} setBarList={setBarList} setCurrentBar={setCurrentBar} setHasSearched={setHasSearched} currentBar={currentBar} />)}
+      {loading ? (<><div className="loading-container"><img src={loadingspinner} alt="loading..." /><h3 className="bar-title">Loading...</h3></div></>) : (hasSearched ? <BarPage keyword={keyword} barList={barList} currentBar={currentBar}/> : <Landing setloading={setloading} setKeyword={setKeyword} setBarList={setBarList} setCurrentBar={setCurrentBar} setHasSearched={setHasSearched} currentBar={currentBar} />)}
     </>
     
   );

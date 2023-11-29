@@ -1,5 +1,7 @@
 import "./barpage.css";
 import "./App.css";
+import {APIProvider, Map, AdvancedMarker,Pin,InfoWindow} from "@vis.gl/react-google-maps"
+
 function BarPage(props) {
 
 
@@ -29,6 +31,31 @@ function BarPage(props) {
         'tipsy_turtle':'The Tipsy Turtle is one of Northgates best shot bars! We also have cocktails, 6 different frozen drinks, and a wide variety of beer!'
     }
 
+    const bar_locations = {
+        "cedar_lane":"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d360.9044086643351!2d-96.34683560984998!3d30.61927899659243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bc35e6ce93%3A0x4aa1584b47ac242a!2sCedar%20Lane!5e0!3m2!1sen!2sus!4v1701227123899!5m2!1sen!2sus",
+        "shiner_park":"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d360.9044086643351!2d-96.34683560984998!3d30.61927899659243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bcfa9aa225%3A0x386bc4e012fbcc74!2sShiner%20Park!5e0!3m2!1sen!2sus!4v1701227171712!5m2!1sen!2sus",
+        "chimys":"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.605471757432!2d-96.35039642375058!3d30.61688949122089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bced4806eb%3A0xc85df025302738ab!2sChimy&#39;s%20College%20Station!5e0!3m2!1sen!2sus!4v1701227218378!5m2!1sen!2sus",
+        "twelve":"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.605471757432!2d-96.35039642375058!3d30.61688949122089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bcee1838e1%3A0x60ce92ed59d909d2!2s12%20Rooftop%20Bar%20%26%20Lounge!5e0!3m2!1sen!2sus!4v1701227243742!5m2!1sen!2sus",
+        "commanders_cove":"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.6031381580765!2d-96.35002832375054!3d30.61695529121754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86468305e69aac43%3A0x3751f592c0b69a6e!2sCommanders%20Cove!5e0!3m2!1sen!2sus!4v1701227268921!5m2!1sen!2sus",
+        'backyard':"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.6022550775033!2d-96.34987602375053!3d30.616980191216292!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bd0004c56b%3A0x6f641ff379c30321!2sThe%20Backyard!5e0!3m2!1sen!2sus!4v1701227294708!5m2!1sen!2sus",
+        'corner':"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.576457489703!2d-96.34908462375049!3d30.617707591181475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bdbca1d889%3A0x6918a4eb7720ab3a!2sThe%20Corner%20Bar%20and%20Rooftop%20Grill%20on%20Northgate!5e0!3m2!1sen!2sus!4v1701227315460!5m2!1sen!2sus",
+        'dixie_chicken':"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.5654984899147!2d-96.34896882375055!3d30.618016591166384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bdaa0827b1%3A0x8cb379f26114bdb3!2sDixie%20Chicken!5e0!3m2!1sen!2sus!4v1701227345205!5m2!1sen!2sus",
+        'dry_bean':"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.5743259898077!2d-96.3489296237505!3d30.617767691178326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bdaa70cb97%3A0xe0dd92f99b6688d5!2sThe%20Dry%20Bean%20Saloon!5e0!3m2!1sen!2sus!4v1701227366126!5m2!1sen!2sus",
+        'duddleys':"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.568030772521!2d-96.34874712375048!3d30.617945191169955!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bda99cfa57%3A0x3dc9005bfd97aaa7!2sDuddley&#39;s%20Draw!5e0!3m2!1sen!2sus!4v1701227389276!5m2!1sen!2sus", 
+        'harrys':"//www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.568030772521!2d-96.34874712375048!3d30.617945191169955!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86468395a63ad063%3A0xe71f7b5d144edd52!2sHurricane%20Harry&#39;s!5e0!3m2!1sen!2sus!4v1701227413754!5m2!1sen!2sus",  
+        'icon':"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.368835401487!2d-96.34844961192967!3d30.62356122551686!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bdaf79429d%3A0xf8d376a95ce1d7c4!2sICON%20Nightclub%20and%20Lounge!5e0!3m2!1sen!2sus!4v1701227439932!5m2!1sen!2sus", 
+        'logies':"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.5555537318173!2d-96.34847392375049!3d30.618296991153134!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bdb3c2ca47%3A0x52045cfa931a2de5!2zTG9naWXigJlz!5e0!3m2!1sen!2sus!4v1701227461309!5m2!1sen!2sus", 
+        'mama_sake':"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.5449633961694!2d-96.34862622375051!3d30.6185955911386!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bdb1b46417%3A0x4863c2d12f1ac118!2sMama%20Sake!5e0!3m2!1sen!2sus!4v1701227484363!5m2!1sen!2sus", 
+        'obannons':"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.5449633961694!2d-96.34862622375051!3d30.6185955911386!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bcf0a166bf%3A0x4f30e9f3a00dfaf1!2sO&#39;Bannon&#39;s%20Taphouse!5e0!3m2!1sen!2sus!4v1701227504817!5m2!1sen!2sus", 
+        'paddock':"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.590952298177!2d-96.34986832375058!3d30.617298891200996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bcfb794795%3A0xf296ea53315324fc!2sPaddock!5e0!3m2!1sen!2sus!4v1701227524377!5m2!1sen!2sus", 
+        'rebel':"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d721.8093817588981!2d-96.34696523263746!3d30.619203296286972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bc4a7b0735%3A0xfb53484b209d664!2sRebel%20Draft%20House!5e0!3m2!1sen!2sus!4v1701227559613!5m2!1sen!2sus",
+        'rough_draught':"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.5383334076187!2d-96.35191491193065!3d30.61878252575309!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bc48cf6b2d%3A0x87e8e9e4031f893e!2sRough%20Draught%20Whiskey%20Bar!5e0!3m2!1sen!2sus!4v1701227581541!5m2!1sen!2sus",
+        'social':"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.5383334076187!2d-96.35191491193065!3d30.61878252575309!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bdb0c5f4e7%3A0xe409a92b36ab8577!2sSocial%20Lounge!5e0!3m2!1sen!2sus!4v1701227606940!5m2!1sen!2sus", 
+        'spot':"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.5363165626654!2d-96.3483718237505!3d30.618839391127075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683d9bbd6932b%3A0x23012f940d40ea5d!2sThe%20Spot%20On%20Northgate!5e0!3m2!1sen!2sus!4v1701227627370!5m2!1sen!2sus", 
+        'tipsy_turtle':"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.565626168151!2d-96.35064512375047!3d30.61801299116672!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864683bcf776cb19%3A0x6922663de967a9c7!2sTipsy%20Turtle!5e0!3m2!1sen!2sus!4v1701227657460!5m2!1sen!2sus"
+
+    }
+
     const bars = props.barList.slice(1).map((name) =>
         <li className='bar-description' key={name}>{name}</li>
     );
@@ -56,8 +83,9 @@ function BarPage(props) {
                 </div>
             </div>
             <div className="right-container">
-                <div>
-                    google tracker thing
+                <div className="map-div">
+                    {/*Help from https://www.techomoro.com/add-or-embed-a-google-map-location-on-a-react-app/ */}
+                    <iframe className="bar-map" src={bar_locations[props.currentBar]} width="600" height="450"/>
                 </div>
             </div>
         </div>

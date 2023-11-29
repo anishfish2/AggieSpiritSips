@@ -66,3 +66,10 @@ body{
 .input-text{
     color:white;
 }
+
+.loading-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
