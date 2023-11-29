@@ -83,7 +83,8 @@ def search_keyword():
         similarities_df = pd.DataFrame(bar_names, columns=['bar_name'])
         for bar_name in bar_names:
                 similarities_df[bar_name] = [1 - distance.cosine(bar_vectors[bar_name], bar_vectors[bar_name_compare]) for bar_name_compare in bar_names]
-        return str([similarities_df['bar_name'].iloc[similarities_df[bar1].nlargest(topk + 1).index.values[1:]].values])
+        print(similarities_df['bar_name'].iloc[similarities_df[bar1].nlargest(topk + 1).index.values[1:]].values)
+        return str([i for i in list(similarities_df['bar_name'].iloc[similarities_df[bar1].nlargest(topk + 1).index.values[1:]].values)])
         
     else:
 
