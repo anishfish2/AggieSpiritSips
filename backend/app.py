@@ -48,18 +48,18 @@ def hello_world():
 #             similarities_df[bar_name] = [1 - distance.cosine(bar_vectors[bar_name], bar_vectors[bar_name_compare]) for bar_name_compare in bar_names]
 #     return str([similarities_df['bar_name'].iloc[similarities_df[bar1].nlargest(topk + 1).index.values[1:]].values])
 
-@app.route("/search-by-keyword")
+@app.route("/search-by-keyword",methods=['GET', 'POST'])
 def search_keyword():
 
 
-
+    print('request got')
     word = request.get_json()['word']
     target_words = ['backyard', 'cedar_lane', 'chimys', 'commanders_cove', 'corner',
                 'dixie_chicken', 'dry_bean', 'duddleys', 'good_bull_icehouse', 'harrys',
                 'icon', 'logies', 'mama_sake', 'obannons', 'paddock', 'rebel',
                 'rough_draught', 'shiner_park', 'social', 'spot', 'tipsy_turtle', 'twelve']
 
-
+    print("word is: ",word)
     matches = process.extract(word, target_words, limit=len(target_words))
 
     filtered_matches = [match for match in matches if match[1] >= 80]
