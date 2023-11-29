@@ -5,20 +5,46 @@ import "./landing.css";
 function Landing(props) {
 
 
-  const [inputText, setInputText] = useState()
+  const [inputText, setInputText] = useState("Enter a keyword")
 
-  const handleSubmitClick = () => {
+  const hostname = "http://127.0.0.1:5000/"
+  const handleSubmitClick = async (e) => {
 
+    e.preventDefault();
+    let result = ""
 
     //find bar similar to keyword via api call
+    const res = await fetch(hostname+"search-by-keyword",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        'Accept':'application/json'
+      },
+      body: JSON.stringify({word: inputText, topk: '4', num_characteristics: "20"})
+    }).then(response => response.text()).then(json => result = json)
+    
+    let cleanstring = ""
+    for(let i = 0; i < result.length; i++){
+      if(result[i] == "," || result[i] == "'" || result[i] == "[" || result[i] == "]"){
+        continue
+      }else{
+        cleanstring += result[i]
+      }
+    }
 
-    //do a yelp call for more information
+    console.log("cleanstring: ",cleanstring)
+    let barsArray = cleanstring.split(" ")
+
+    //do a yelp call for more information (or just cache might be easier)
+
 
     //set currentbar to that bar, 
 
     //finally set searched to true, making it go to the next screen, hopefully with populated data
     props.setHasSearched(true)
-    props.setCurrentBar(inputText)
+    props.setCurrentBar(barsArray[0])
+    props.setBarList(barsArray)
+    props.setKeyword(inputText)
   }
 
   const handleInputChange = (e) => {
